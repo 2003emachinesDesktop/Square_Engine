@@ -1,0 +1,33 @@
+
+String input;
+String output[];
+
+void setup() {
+    selectInput("Select a file to process:", "fileSelected");
+     //output=loadStrings(input);
+}
+
+void draw() {
+    //if(output!=null)
+    if(mousePressed==true)
+    {
+      
+      for(int i=0; i<output.length; i++)
+      {
+        println(output[i]);
+      }
+      mousePressed=false;
+    }
+}
+
+void fileSelected(File selection) {
+
+    if(selection == null) 
+    {
+        println("Window was closed or the user hit 'cancel.'");
+    } 
+    else {
+        input=selection.getAbsolutePath();  
+        output=loadStrings(input);
+    }
+}
