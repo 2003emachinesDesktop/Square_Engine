@@ -1,0 +1,24 @@
+
+float increment;
+float second;
+
+void setup()
+{
+  size(400,300);
+  background(50);
+  frameRate(30);
+}
+
+void draw()
+{
+  increment++;
+  
+  if(increment/30==1.0)
+  {
+    second++;
+    increment=0.0;
+    
+    println(int(second));
+  }
+}
+

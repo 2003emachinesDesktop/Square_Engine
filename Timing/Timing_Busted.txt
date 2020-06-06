@@ -1,0 +1,39 @@
+
+int increment;
+int value;
+int limit;
+
+void setup()
+{
+  size(400,300);
+  background(50);
+  frameRate(30);
+  
+  println("### "+frameRate+" ###");
+  
+  value=200;
+  limit=255;
+}
+
+void draw()
+{
+  wait();
+  background(value);
+  
+  increment++;
+}
+
+void wait()
+{
+  if(increment/frameRate==1)
+  {
+    value++;
+    increment=0;
+    println(value); 
+   
+    if(value==limit)
+    {
+      value=0;
+    }
+  }
+}
