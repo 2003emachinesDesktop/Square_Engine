@@ -1,0 +1,155 @@
+
+Monster[] monsters=new Monster[4];
+
+void setup()
+{
+  size(1200,900,JAVA2D);
+  background(0);
+  frameRate(30);
+  
+  for(int l=0; l<monsters.length; l++)
+  {
+    int x=int(random(width-100));
+    int y=int(random(height-200));
+    int z=int(random(width-100));
+    
+    monsters[l]=new Monster(x,y,z);
+  }
+  
+  for(int l=0; l<monsters.length; l++)
+  {
+    monsters[l].Load();
+  }
+}
+
+
+void draw()
+{
+  background(0);
+  
+  for(Monster l: monsters)
+  {
+    l.Update();
+    l.Draw();
+  }
+}
+
+class Monster
+{
+  int x;
+  int y;
+  int z;
+  
+  PImage monster;
+  PImage sprite;
+  
+  float Rate=.06;
+  
+  int veiw=250;
+  int offX;
+  int offY;
+  
+  int sizeX=100;
+  int sizeY=200;
+  
+  boolean Collision;
+  boolean Following;
+  boolean Touching;
+  
+  Monster(int u,int v,int w)
+  {
+    x=u;
+    y=v;
+    z=w;
+  }
+  
+  void Load()
+  {
+    monster=loadImage("monster.png");
+    sprite=loadImage("guy.png");
+ 
+    Collision=false;
+    Following=false;
+    Touching=false;
+  }
+  
+  void Update()
+  {
+    offX=x-120;
+    offY=y-120;
+
+    if(Touching==true)
+    {
+      background(200,0,0);
+      mouseX=width/2;
+      mouseY=height/2;
+    }
+    
+    if(keyPressed==true)
+    {
+      Collision=false;
+      Following=false;
+      Touching=false;
+    }
+    
+     if(mouseX+sizeX>offX && mouseX<offX+veiw)
+     {
+       if(mouseY+sizeY>offY && mouseY<offY+veiw)
+       {
+         Collision=true;
+       }
+     }
+     
+     if(mouseX+sizeX>x && mouseY<x+sizeX)
+     {
+       if(mouseY+sizeY>y && mouseY<y+sizeY)
+       {
+         Touching=true;
+       }
+     }
+     
+     if(Collision==true)
+     {
+       float targetX=mouseX;
+       float dx=targetX-x;
+       x+=dx*Rate;
+       
+       float targetY=mouseY;
+       float dy=targetY-y;
+       y+=dy*Rate;
+       
+       
+      if(dx>veiw || dx<-veiw)
+      {
+        Collision=false;
+      }
+    
+      if(dy>veiw || dy<-veiw)
+      {
+        Collision=false;
+      }
+     }
+     
+     if(Collision==false)
+     {
+       if(z>x)
+       {
+         x++;
+       }
+       if(z<x)
+       {
+         x--;
+       }
+       if(z==x)
+       {
+         z=int(random(width-100));
+       } 
+    }
+  }
+  
+  void  Draw()
+  {
+    image(monster,x,y);
+    image(sprite,mouseX,mouseY);
+  }
+}

@@ -1,0 +1,176 @@
+
+Monster[] monsters=new Monster[5];
+
+int screenX=width;
+
+void setup()
+{
+  size(1200,800);
+  //fullScreen(JAVA2D);
+  frameRate(30);
+  
+  for(int i=0; i<monsters.length; i++)
+  {
+    monsters[i]=new Monster(screenX);
+  }
+  
+  for(int j=0; j<monsters.length; j++)
+  {
+    monsters[j].Load();
+  }
+}
+
+
+void draw()
+{
+  for(int i=0; i<monsters.length; i++)
+  {
+    monsters[i].Update();
+    monsters[i].Draw();
+  }
+ 
+}
+    
+    
+class Monster
+{
+  PImage Sprite;
+  PImage Monster;
+  
+  int screenX;
+
+  int Xpos;
+  int Ypos;
+
+  int sizeX=98;
+  int sizeY=188;
+
+  int veiw=500;
+
+  int offsetX;
+  int offsetY;
+
+  float monsterRate=.06;
+
+  boolean Collision;
+  boolean following;
+
+  boolean touching;
+  
+  Monster(int tempScreenX)
+  {
+    screenX=tempScreenX;
+  }
+  
+  
+  void Load()
+  {
+    Monster=loadImage("monster.png");
+    Sprite=loadImage("guy.png");
+  
+    Xpos=int(random(width-veiw));
+    Ypos=int(random(height-veiw));
+  
+    offsetX=Xpos-120;
+    offsetY=Ypos-120;
+  
+    Collision=false;
+    following=false;
+    touching=false;
+  }
+  
+  void Update()
+  {
+    if(touching==false)
+    {
+      background(0,127,0);
+    }
+    if(touching==true)
+    {
+      background(200,0,0);
+      mouseX=width/2;
+      mouseY=height/2; 
+    }
+  
+  
+    if(keyPressed==true)
+    {
+      Collision=false;
+      following=false;
+      touching=false;
+    }
+    
+    
+    offsetX=Xpos-120;
+    offsetY=Ypos-120; 
+    
+    
+    if(mouseX+sizeX>offsetX && mouseX<offsetX+veiw)
+    {
+      if(mouseY+sizeY>offsetY && mouseY<offsetY+veiw)
+      {
+        Collision=true;
+      }
+    }
+    
+    
+    if(mouseX+sizeX>Xpos && mouseX<Xpos+sizeX)
+    {
+      if(mouseY+sizeY>Ypos && mouseY<Ypos+sizeY)
+      {
+        touching=true;
+      }
+    }
+  
+  
+    if(Collision==true)
+    {
+      float targetX = mouseX;
+      float dx = targetX - Xpos;
+      Xpos += dx *monsterRate;
+  
+      float targetY = mouseY;
+      float dy = targetY - Ypos;
+      Ypos += dy * monsterRate;
+    
+    
+      if(dx>veiw || dx<-veiw)
+      {
+        Collision=false;
+      }
+    
+      if(dy>veiw || dy<-veiw)
+      {
+        Collision=false;
+      }
+    }
+    
+    if(Collision==false)
+    {
+      int pos=0;
+      int rate=4;
+      
+      if(Xpos<pos)
+      {
+        Xpos+=rate;
+      }
+      if(Xpos>pos)
+      {
+        Xpos-=rate;
+      }
+  
+      if(Xpos==pos)
+      {
+        pos=int(random(screenX-10));
+      }
+      
+    }
+  }
+  
+  
+  void Draw()
+  {
+    image(Monster,Xpos,Ypos);
+    image(Sprite,mouseX,mouseY); 
+  }
+}

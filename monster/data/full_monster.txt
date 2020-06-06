@@ -1,0 +1,123 @@
+PImage Sprite;
+PImage Monster;
+
+int Xpos;
+int Ypos;
+
+int sizeX=98;
+int sizeY=188;
+
+int veiwX=338;
+int veiwY=428;
+
+int offsetX;
+int offsetY;
+
+float monsterRate=.06;
+
+boolean Collision;
+boolean following;
+
+boolean touching;
+
+
+void setup()
+{
+  size(1200,800);
+  //fullScreen(JAVA2D);
+  
+  Monster=loadImage("monster.png");
+  Sprite=loadImage("guy.png");
+  
+  Xpos=int(random(width-veiwX));
+  Ypos=int(random(height-veiwY));
+  
+  offsetX=Xpos-120;
+  offsetY=Ypos-120;
+  
+  Collision=false;
+  following=false;
+  touching=false;
+}
+
+
+void draw()
+{
+  if(touching==false)
+  {
+    background(0,127,0);
+  }
+  if(touching==true)
+  {
+    background(200,0,0);
+    println("press 'space' to restart");
+    mouseX=width/2;
+    mouseY=height/2; 
+  }
+  
+  //background(0,127,0);
+  
+  offsetX=Xpos-120;
+  offsetY=Ypos-120;
+  
+  fill(0,127,255);
+  rect(offsetX,offsetY,veiwX,veiwY);
+  
+  image(Monster,Xpos,Ypos);
+  
+  image(Sprite,mouseX,mouseY);
+  
+  
+  if(mouseX+sizeX>offsetX && mouseX<offsetX+veiwX)
+  {
+    if(mouseY+sizeY>offsetY && mouseY<offsetY+veiwY)
+    {
+      Collision=true;
+    }
+  }
+  
+  
+  
+  
+  if(Collision==true)
+  {
+    float targetX = mouseX;
+    float dx = targetX - Xpos;
+    Xpos += dx *monsterRate;
+  
+    float targetY = mouseY;
+    float dy = targetY - Ypos;
+    Ypos += dy * monsterRate;
+    
+    
+    if(dx>1000 || dx<-1000)
+    {
+      Collision=false;
+    }
+    
+    if(dy>1000 || dy<-1000)
+    {
+      Collision=false;
+    }
+  }
+  
+  println("s  "+mouseX+";"+mouseY);
+  println("m  "+Xpos+";"+Ypos);
+  
+  if(mouseX+sizeX>Xpos && mouseX<Xpos+sizeX)
+  {
+    if(mouseY+sizeY>Ypos && mouseY<Ypos+sizeY)
+    {
+      println("touching");
+      touching=true;
+    }
+  }
+  
+  if(keyPressed)
+  {
+    Collision=false;
+    touching=false;
+  }
+  
+}
+    

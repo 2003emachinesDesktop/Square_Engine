@@ -1,0 +1,99 @@
+PImage start;
+PImage menu;
+PImage play;
+PImage options;
+PImage loading;
+
+int gameScreen=0;
+
+void setup()
+{
+  size(1800,900);
+  frameRate(30);
+  //fullScreen();
+  background(0);
+  
+  start=loadImage("startscreen.png");
+  menu=loadImage("menuscreen.png");
+  play=loadImage("playscreen.png");
+  loading=loadImage("loadingscreen.png");
+  options=loadImage("optionsscreen.png");
+}
+
+void draw()
+{
+  
+
+/*void draw()
+{
+  if(keyPressed==true)
+  {
+    image(menu,0,0);
+    println("menu");
+    keyPressed=false;
+  }
+  
+  if(mousePressed==true)
+  {
+    if(mouseX>706 && mouseX<1166)
+    {
+      if(mouseY>258 && mouseY<378)
+      {
+        image(play,0,0);
+        println("playscreen");
+        mousePressed=false;
+      }
+    }
+    if(mouseX>706 && mouseX<1166)
+    {
+      if(mouseY>414 && mouseY<537)
+      {
+        image(loading,0,0);
+        println("loadscreen");
+        mousePressed=false;
+      }
+    }
+    if(mouseX>706 && mouseX<1166)
+    {
+      if(mouseY>568 && mouseY<691)
+      {
+        image(options,0,0);
+        println("optionscreen");
+        mousePressed=false;
+      }
+    }
+    if(mouseX>706 && mouseX<1166)
+    {
+      if(mouseY>722 && mouseY<844)
+      {
+        exit();
+        mousePressed=false;
+      }
+    }
+  }
+ 
+  
+  if(keyPressed)
+  {
+    if(key==CODED)
+    {
+      if(keyCode==BACKSPACE)
+      {
+        image(menu,0,0);
+        keyPressed=false; 
+      }
+      if(keyCode==ESC)
+      {
+        exit();
+      }
+    }
+  } 
+  
+}
+*/
+
+     
+  
+  
+
+        

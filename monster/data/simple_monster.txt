@@ -1,0 +1,92 @@
+
+int Xpos;
+int Ypos;
+int size=200;
+int smallSize=40;
+
+int offsetX;
+int offsetY;
+
+boolean Collision;
+boolean following;
+
+void setup()
+{
+  size(1200,800);
+  
+  Xpos=int(random(width-size));
+  Ypos=int(random(height-size));
+  
+  offsetX=Xpos+80;
+  offsetY=Ypos+80;
+  
+  Collision=false;
+  following=false;
+}
+
+
+void draw()
+{
+  if(Collision==false)
+  {
+    background(0,127,0);
+  }
+  if(Collision==true)
+  {
+    background(127,0,127);
+  }
+  
+  fill(0,127,255);
+  rect(Xpos,Ypos,size,size);
+  
+  offsetX=Xpos+80;
+  offsetY=Ypos+80;
+  
+  fill(0,0,127);
+  rect(offsetX,offsetY,smallSize,smallSize);
+  
+  fill(34,21,14);
+  rect(mouseX,mouseY,smallSize,smallSize);
+  
+  /*
+  if(mouseX+smallSize<Xpos || mouseX>Xpos)
+  {
+    if(mouseY+smallSize<Ypos || mouseY>Ypos)
+    {
+      Collision=false;
+    }
+  }
+  */
+  
+  
+  if(mouseX+smallSize>Xpos && mouseX<Xpos+size)
+  {
+    if(mouseY+smallSize>Ypos && mouseY<Ypos+size)
+    {
+      Collision=true;
+    }
+  }
+  
+  
+  
+  if(Collision==true)
+  {
+    Xpos=mouseX/2;
+    Ypos=mouseY/2;
+    
+  
+    
+    if(offsetX>300 || offsetX<-300)
+    {
+      if(offsetY>300 || offsetY<-300)
+      {
+        Collision=false;
+      }
+    }
+    
+    
+    
+    println(offsetX+" ; "+offsetY);
+  }
+    
+}

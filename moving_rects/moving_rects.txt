@@ -1,0 +1,60 @@
+
+Rect rects;
+int x;
+int y;
+int p;
+
+void setup()
+{
+  size(500,400);
+  background(0);
+  frameRate(30);
+  
+  x=int(random(width-10));
+  y=int(random(height-10));
+  
+  p=int(random(width-10));
+  
+  rects=new Rect(x,y,p);
+}
+
+void draw()
+{
+  rects.Update();
+}
+
+class Rect
+{
+  int u;
+  int v;
+  int w=10;
+  int z;
+  
+  Rect(int tempU,int tempV,int tempZ)
+  {
+    u=tempU;
+    v=tempV;
+    z=tempZ;
+  }
+  
+  void Update()
+  {
+    fill(0,127,255);
+    rect(u,v,w,w);
+    
+    if(z>u)
+    {
+      u++;
+    }
+    
+    if(z<u)
+    {
+      u--;
+    }
+    
+    if(z==u)
+    {
+      z=int(random(width-10));
+    }
+  }
+}
