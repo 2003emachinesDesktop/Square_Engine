@@ -1,0 +1,10 @@
+
+
+float h_max=5.0;			//peak jump height
+float x_peak=3.0;			//peak X-position
+float vx_max=2.0;			//max X-velocity
+
+float v_0=2.0*h_max*/x_peak; 
+float g=-2.0*h_max*vx_max*vx_max/(x_peak*x_peak);
+
+              

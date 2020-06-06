@@ -1,0 +1,161 @@
+
+PImage tree;
+PImage stick;
+
+boolean isBreakable;
+boolean isRemoved;
+
+boolean isLoaded;
+
+String columns[];
+String rows[];
+
+int[][] map;
+
+int[][] newTile;
+
+
+void setup()
+{
+  size(1200,800);
+  background(100);
+  
+  tree=loadImage("tree.png");
+  stick=loadImage("stick.png");
+  
+  /*
+  rows=loadStrings("data.txt");
+  columns=splitTokens(rows[1]);
+  
+  map=new int[rows.length][columns.length];
+  
+  for(int a=0; a<rows.length; a++)
+    {
+      columns=splitTokens(rows[a]);
+    
+      for(int b=0; b<columns.length; b++)
+      {
+        map[a][b]=Integer.parseInt(columns[b]);
+      }
+    }
+  */
+  
+  boolean isBreakable=true;
+  boolean isRemoved=false;
+  
+  boolean isLoaded=false;
+}
+
+
+void draw()
+{
+  background(100);
+  
+  if(isLoaded==false)
+  {
+    rows=loadStrings("data.txt");
+    columns=splitTokens(rows[1]);
+  
+  
+    map=new int[rows.length][columns.length];
+  
+    for(int a=0; a<rows.length; a++)
+    {
+      columns=splitTokens(rows[a]);
+    
+      for(int b=0; b<columns.length; b++)
+      {
+        map[a][b]=Integer.parseInt(columns[b]);
+      }
+      
+      isLoaded=true;
+    }
+  }
+    
+  
+  for(int i=0; i<rows.length; i++)
+  {
+    for(int k=0; k<columns.length; k++)
+    {
+      if(map[i][k]==0)
+      {
+        fill(0,200,127);
+        rect(i*100,k*100,100,100);
+      }
+      if(map[i][k]==1)
+      {
+        image(tree,i*100,k*100);
+        
+        if(mousePressed==true)
+        {
+          
+         saveStrings("data.txt", newTile[]);
+         
+         isLoaded=false;
+        }
+      }
+    }
+  }
+}
+
+PImage tree;
+PImage stick;
+
+boolean isBreakable;
+boolean isRemoved;
+
+
+String columns[];
+String rows[];
+
+int[][] map;
+
+
+void setup()
+{
+  size(1200,800);
+  background(100);
+  
+  tree=loadImage("tree.png");
+  stick=loadImage("stick.png");
+  
+  rows=loadStrings("data.txt");
+  columns=splitTokens(rows[1]);
+  
+  
+  map=new int[rows.length][columns.length];
+  
+  for(int a=0; a<rows.length; a++)
+    {
+      columns=splitTokens(rows[a]);
+    
+      for(int b=0; b<columns.length; b++)
+      {
+        map[a][b]=Integer.parseInt(columns[b]);
+      }
+    }
+  
+  boolean isBreakable=true;
+  boolean isRemoved=false;
+}
+
+void draw()
+{
+  background(100);
+  
+  for(int i=0; i<rows.length; i++)
+  {
+    for(int k=0; k<columns.length; k++)
+    {
+      if(map[i][k]==0)
+      {
+        fill(0,127,127);
+        rect(i*100,k*100,100,100);
+      }
+      if(map[i][k]==1)
+      {
+        image(tree,i*100,k*100);
+      }
+    }
+  }
+}
