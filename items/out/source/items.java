@@ -15,37 +15,80 @@ import java.io.IOException;
 public class items extends PApplet {
 
 
-boolean Breakable = false;
-boolean Dangerous = false;
-boolean In_Inv = true;
-boolean Emits_Light = true;
-boolean Visable = true;
+Items item;
 
-int Amount=1;
-int Damage=2;
-
-PImage Normal_Rock;
-PImage Inv_Rock;
-
-
-
+String FilePath;
 
 public void setup()
 {
-    
-    background(0,255,50);
+  
+  background(25);
 
-    Normal_Rock=loadImage("Normal_Rock.png");
-    Inv_Rock=loadImage("Inv_Rock.png");
+  FilePath="imageNames.csv";
+
+  item=new Items();
+
+  item.Start(FilePath);
 }
 
-public void draw() 
+public void draw()
 {
-   image(Normal_Rock, 352, 202); 
-   image(Inv_Rock, 42, 468);
+  item.Run();
 }
 
-  public void settings() {  size(800,500); }
+
+
+class Items
+{
+  Table ItemData;
+
+  HashMap<String, PImage> itemImage = new HashMap();
+
+  String Datafile;
+
+  Items()
+  {
+  }
+
+  public void Start(String datafile) 
+  {
+    Datafile=datafile;
+
+    ItemData = loadTable(Datafile,"header");
+
+    for (TableRow row : ItemData.rows() )
+    {
+      String itemName = row.getString(0);
+      itemImage.put(itemName, loadImage(itemName+".png"));  
+    }
+  }
+
+  
+
+  public void Run()
+  {
+
+    for(TableRow row: ItemData.rows())
+    {
+      PImage Stone=itemImage.get("stone");
+      image(Stone,0,0);
+
+      PImage Rock=itemImage.get("rock");
+      image(Rock,100,0); 
+
+      PImage Grass=itemImage.get("grass");
+      image(Grass,200,0);
+    }
+
+    for(TableRow row: ItemData.rows())
+    {
+      int  ID=row.getInt("id");
+      String name=row.getString("name");
+      println(ID+" "+name);
+    }
+  }
+}
+  public void settings() {  size(300,200); }
   static public void main(String[] passedArgs) {
     String[] appletArgs = new String[] { "items" };
     if (passedArgs != null) {

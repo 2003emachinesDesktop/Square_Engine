@@ -1,69 +1,74 @@
-class items
-{
-  boolean Breakable = false;
-  boolean Dangerous = false;
-  boolean In_Inv = true;
-  boolean Emits_Light = true;
-  boolean Visable = true;
 
-  int Tile_Type;
-  int Inv_Amount=1;
-  int Damage=2;
+Items item;
 
-  PImage Normal_Rock;
-  PImage Inv_Rock;
+String FilePath;
 
-
-  void Items(tiletype,ininv,invamount,emitslight,breakable,dangerous,visable,damage)
-  {
-    tiletype=Tile_Type;
-    ininv=Inv_Rock;
-    invamount=Inv_Amount;
-    emitslight=Emits_Light;
-    breakable=Breakable;
-    dangerous=Dangerous;
-    visable=Visable;
-    damage=Damage;
-  }
-  
-  void dirt()
-  {
-    if(tiletype==0 || tiletype==1 || tiletype==2 || tiletype==3 || tiletype==4)
-     {
-       //tiletype=Bare_Dirt;
-       emitslight=false;
-       breakable=true;
-       dangerous=false;
-       visable=true;
-       damage=0;
-
-       //ininv=true;
-       //invamount=true;
-      }
-   }
-
-
-   void stone()
-  {}
-}
-)
-
-}
-
-/*
 void setup()
 {
-    size(800,500);
-    background(0,255,50);
+  size(300,200);
+  background(25);
 
-    Normal_Rock=loadImage("Normal_Rock.png");
-    Inv_Rock=loadImage("Inv_Rock.png");
+  FilePath="imageNames.csv";
+
+  item=new Items();
+
+  item.Start(FilePath);
 }
 
-void draw() 
+void draw()
 {
-   image(Normal_Rock, 352, 202); 
-   image(Inv_Rock, 42, 468);
+  item.Run();
 }
-*/
 
+
+
+class Items
+{
+  Table ItemData;
+
+  HashMap<String, PImage> itemImage = new HashMap();
+
+  String Datafile;
+
+  Items()
+  {
+  }
+
+  void Start(String datafile) 
+  {
+    Datafile=datafile;
+
+    ItemData = loadTable(Datafile,"header");
+
+    for (TableRow row : ItemData.rows() )
+    {
+      String itemName = row.getString(0);
+      itemImage.put(itemName, loadImage(itemName+".png"));  
+    }
+  }
+
+  
+
+  void Run()
+  {
+
+    for(TableRow row: ItemData.rows())
+    {
+      PImage Stone=itemImage.get("stone");
+      image(Stone,0,0);
+
+      PImage Rock=itemImage.get("rock");
+      image(Rock,100,0); 
+
+      PImage Grass=itemImage.get("grass");
+      image(Grass,200,0);
+    }
+
+    for(TableRow row: ItemData.rows())
+    {
+      int  ID=row.getInt("id");
+      String name=row.getString("name");
+      println(ID+" "+name);
+    }
+  }
+}

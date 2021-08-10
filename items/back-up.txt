@@ -1,161 +1,92 @@
 
-PImage tree;
-PImage stick;
 
-boolean isBreakable;
-boolean isRemoved;
+Table ItemData;
 
-boolean isLoaded;
+HashMap<String, PImage> itemImage = new HashMap();
 
-String columns[];
-String rows[];
-
-int[][] map;
-
-int[][] newTile;
-
-
-void setup()
+void setup() 
 {
-  size(1200,800);
-  background(100);
+  size(300,200);
+  background(25);
+
+  ItemData = loadTable("imageNames.csv","header"); 
   
-  tree=loadImage("tree.png");
-  stick=loadImage("stick.png");
+ //loads images for gametiles into a hashmap
   
+  ///*
+  for (TableRow row : ItemData.rows() )
+  {
+    ///*
+    String itemName = row.getString(0);
+    itemImage.put(itemName, loadImage(itemName+".png"));
+    //*/
+  }
+  //*/
+
+  
+  
+
+  //loads tile id into hashmap, why is this needed? answer: its not!
+
+  //intValues=loadTable("imageNames.csv");
+  //intValues=loadTable("imageNames foo.csv");
+
   /*
-  rows=loadStrings("data.txt");
-  columns=splitTokens(rows[1]);
-  
-  map=new int[rows.length][columns.length];
-  
-  for(int a=0; a<rows.length; a++)
-    {
-      columns=splitTokens(rows[a]);
-    
-      for(int b=0; b<columns.length; b++)
-      {
-        map[a][b]=Integer.parseInt(columns[b]);
-      }
-    }
+  for(TableRow row: ItemData.rows())
+  {
+    //String itemID = row.getString(0);
+    String itemID=row.getString("id");
+    println("## "+ itemID);
+    itemDropID.put(itemID,itemID);
+  }
   */
-  
-  boolean isBreakable=true;
-  boolean isRemoved=false;
-  
-  boolean isLoaded=false;
-}
 
-
-void draw()
-{
-  background(100);
-  
-  if(isLoaded==false)
+  /*
+  for(TableRow row: intValues.rows())
   {
-    rows=loadStrings("data.txt");
-    columns=splitTokens(rows[1]);
-  
-  
-    map=new int[rows.length][columns.length];
-  
-    for(int a=0; a<rows.length; a++)
-    {
-      columns=splitTokens(rows[a]);
-    
-      for(int b=0; b<columns.length; b++)
-      {
-        map[a][b]=Integer.parseInt(columns[b]);
-      }
-      
-      isLoaded=true;
-    }
+   boolean newLine=false;
+
+   for(int i=0; i<intValues.rows(); i++ )
+   {
+     println(intValues.getString(i,i));
+   }
   }
-    
-  
-  for(int i=0; i<rows.length; i++)
-  {
-    for(int k=0; k<columns.length; k++)
-    {
-      if(map[i][k]==0)
-      {
-        fill(0,200,127);
-        rect(i*100,k*100,100,100);
-      }
-      if(map[i][k]==1)
-      {
-        image(tree,i*100,k*100);
-        
-        if(mousePressed==true)
-        {
-          
-         saveStrings("data.txt", newTile[]);
-         
-         isLoaded=false;
-        }
-      }
-    }
-  }
-}
-
-PImage tree;
-PImage stick;
-
-boolean isBreakable;
-boolean isRemoved;
-
-
-String columns[];
-String rows[];
-
-int[][] map;
-
-
-void setup()
-{
-  size(1200,800);
-  background(100);
-  
-  tree=loadImage("tree.png");
-  stick=loadImage("stick.png");
-  
-  rows=loadStrings("data.txt");
-  columns=splitTokens(rows[1]);
-  
-  
-  map=new int[rows.length][columns.length];
-  
-  for(int a=0; a<rows.length; a++)
-    {
-      columns=splitTokens(rows[a]);
-    
-      for(int b=0; b<columns.length; b++)
-      {
-        map[a][b]=Integer.parseInt(columns[b]);
-      }
-    }
-  
-  boolean isBreakable=true;
-  boolean isRemoved=false;
+  */
 }
 
 void draw()
 {
-  background(100);
-  
-  for(int i=0; i<rows.length; i++)
+
+  for(TableRow row: ItemData.rows())
   {
-    for(int k=0; k<columns.length; k++)
-    {
-      if(map[i][k]==0)
-      {
-        fill(0,127,127);
-        rect(i*100,k*100,100,100);
-      }
-      if(map[i][k]==1)
-      {
-        image(tree,i*100,k*100);
-      }
-    }
+    PImage Stone=itemImage.get("stone");
+    image(Stone,0,0);
+
+    PImage Rock=itemImage.get("rock");
+    image(Rock,100,0); 
+
+    PImage Grass=itemImage.get("grass");
+    image(Grass,200,0);
+    
+  
+  }
+
+  for(TableRow row: ItemData.rows())
+  {
+    int  ID=row.getInt("id");
+    String name=row.getString("name");
+    println(ID+" "+name);
+  
+    
   }
 }
+
+
+
+
+//item(int itemId,boolean emitsLight,boolean breakable,int dropItemId,boolean harmful,float damage)
+
+//item(String filePath)
+
+
+
